@@ -3,17 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MySite - Home</title>
+  <meta name="theme-color" content="#07060f" />
+  <meta name="description" content="ANKIT FF - Free Fire gaming channel on YouTube." />
+  <title>ANKIT FF - Free Fire Gaming</title>
 
   <style>
-    /* ---------- Basic setup ---------- */
+    /* =====================================================
+       ANKIT FF - Free Fire Gaming Website
+       Colours: Neon Purple, Neon Blue, Neon Red on dark
+       ===================================================== */
     :root {
-      --primary: #4f46e5;
-      --primary-dark: #4338ca;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --bg: #ffffff;
-      --bg-soft: #f5f7ff;
+      --bg: #07060f;
+      --bg-soft: #0c0a1a;
+      --card: rgba(255, 255, 255, 0.045);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text: #ecebff;
+      --muted: #a09cc0;
+
+      --purple: #a855f7;
+      --blue: #00b7ff;
+      --red: #ff2e63;
+
+      --gradient: linear-gradient(135deg, var(--purple), var(--blue));
+      --gradient-red: linear-gradient(135deg, var(--red), var(--purple));
+      --gradient-full: linear-gradient(120deg, var(--blue), var(--purple) 50%, var(--red));
     }
 
     * {
@@ -31,6 +44,7 @@
       color: var(--text);
       background: var(--bg);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
     .container {
@@ -40,188 +54,953 @@
       padding: 0 20px;
     }
 
+    /* Keeps section titles visible below the sticky header */
+    section[id] {
+      scroll-margin-top: 68px;
+    }
+
+    /* ---------- Animations ---------- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50%      { transform: translate(30px, -30px) scale(1.1); }
+    }
+
+    @keyframes gradientMove {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes neonPulse {
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.55)); }
+      50%      { filter: drop-shadow(0 0 22px rgba(0, 183, 255, 0.75)); }
+    }
+
+    @keyframes pulseRing {
+      0%   { box-shadow: 0 0 0 0 rgba(255, 46, 99, 0.55); }
+      100% { box-shadow: 0 0 0 16px rgba(255, 46, 99, 0); }
+    }
+
     /* ---------- Header / Navigation ---------- */
     header {
       position: sticky;
       top: 0;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #e5e7eb;
+      background: rgba(7, 6, 15, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--card-border);
       z-index: 100;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 1px;
+      background: var(--gradient-full);
+      opacity: 0.6;
     }
 
     .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
+      height: 68px;
     }
 
     .logo {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
       text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.7));
+    }
+
+    .logo-text {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: var(--gradient-full);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: gradientMove 6s ease infinite;
+      white-space: nowrap;
     }
 
     .nav-links {
       display: flex;
-      gap: 28px;
+      gap: 26px;
       list-style: none;
     }
 
     .nav-links a {
+      position: relative;
       text-decoration: none;
-      color: var(--text);
-      font-weight: 500;
-      transition: color 0.2s;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      transition: color 0.25s;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-full);
+      border-radius: 2px;
+      transition: width 0.3s;
     }
 
     .nav-links a:hover {
-      color: var(--primary);
+      color: #fff;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     /* Hamburger button (only visible on mobile) */
     .menu-btn {
       display: none;
-      background: none;
-      border: none;
-      font-size: 1.8rem;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      width: 42px;
+      height: 42px;
+      font-size: 1.4rem;
       cursor: pointer;
       color: var(--text);
+      transition: background 0.25s, border-color 0.25s;
+    }
+
+    .menu-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--purple);
+    }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--gradient);
+      background-size: 200% 200%;
+      color: #fff;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 999px;
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+      transition: transform 0.25s, box-shadow 0.25s, background-position 0.4s;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      background-position: 100% 50%;
+      box-shadow: 0 12px 32px rgba(0, 183, 255, 0.45);
+    }
+
+    .btn:active {
+      transform: translateY(-1px);
+    }
+
+    .btn-red {
+      background: var(--gradient-red);
+      box-shadow: 0 8px 24px rgba(255, 46, 99, 0.4);
+    }
+
+    .btn-red:hover {
+      box-shadow: 0 12px 32px rgba(255, 46, 99, 0.6);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--purple);
+      box-shadow: none;
+    }
+
+    .btn-outline:hover {
+      background: rgba(168, 85, 247, 0.18);
+      box-shadow: 0 0 24px rgba(168, 85, 247, 0.45);
     }
 
     /* ---------- Hero section ---------- */
     .hero {
-      background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+      position: relative;
       text-align: center;
-      padding: 90px 0;
+      padding: 130px 0 120px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 25%, rgba(168, 85, 247, 0.22), transparent 45%),
+        radial-gradient(circle at 82% 70%, rgba(255, 46, 99, 0.18), transparent 45%),
+        radial-gradient(circle at 50% 100%, rgba(0, 183, 255, 0.16), transparent 50%),
+        var(--bg);
+    }
+
+    /* Subtle gaming grid lines */
+    .hero .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      -webkit-mask-image: radial-gradient(circle at center, #000 25%, transparent 75%);
+      mask-image: radial-gradient(circle at center, #000 25%, transparent 75%);
+      z-index: 0;
+    }
+
+    /* Floating neon glow circles */
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.35;
+      z-index: 0;
+      animation: float 9s ease-in-out infinite;
+    }
+
+    .hero::before {
+      width: 300px;
+      height: 300px;
+      background: var(--purple);
+      top: -80px;
+      left: -70px;
+    }
+
+    .hero::after {
+      width: 340px;
+      height: 340px;
+      background: var(--red);
+      bottom: -120px;
+      right: -90px;
+      animation-delay: -4s;
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero .tag {
+      display: inline-block;
+      padding: 6px 18px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.12);
+      color: #d9b8ff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: fadeUp 0.8s ease both;
     }
 
     .hero h1 {
-      font-size: 2.8rem;
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
-
-    .hero h1 span {
-      color: var(--primary);
+      font-size: clamp(3.2rem, 13vw, 6.8rem);
+      line-height: 1.05;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      background: var(--gradient-full);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: fadeUp 0.8s ease 0.1s both, gradientMove 6s ease infinite, neonPulse 3.5s ease-in-out infinite;
     }
 
     .hero p {
-      max-width: 560px;
-      margin: 0 auto 30px;
+      max-width: 580px;
+      margin: 0 auto 38px;
       color: var(--muted);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
+      animation: fadeUp 0.8s ease 0.25s both;
     }
 
-    .btn {
-      display: inline-block;
-      background: var(--primary);
-      color: #fff;
-      padding: 12px 28px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background 0.2s, transform 0.2s;
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      animation: fadeUp 0.8s ease 0.4s both;
     }
 
-    .btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
+    .hero-buttons .btn-red {
+      animation: pulseRing 2s ease-out infinite;
     }
 
-    /* ---------- Features section ---------- */
-    .features {
-      padding: 70px 0;
-      background: var(--bg-soft);
+    /* ---------- Common section styles ---------- */
+    .about,
+    .gaming,
+    .youtube,
+    .instagram,
+    .contact {
+      padding: 90px 0;
     }
+
+    .about     { background: var(--bg); }
+    .gaming    { background: var(--bg-soft); }
+    .youtube   { background: var(--bg); }
+    .instagram { background: var(--bg-soft); }
+    .contact   { background: var(--bg); }
 
     .section-title {
       text-align: center;
-      font-size: 2rem;
-      margin-bottom: 40px;
+      font-size: 2.3rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
     }
 
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 4px;
+      margin: 14px auto 0;
+      border-radius: 4px;
+      background: var(--gradient-full);
+    }
+
+    .section-sub {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto;
+      color: var(--muted);
+    }
+
+    .sub-title {
+      font-size: 1.3rem;
+      margin: 56px 0 20px;
+      padding-left: 14px;
+      border-left: 4px solid var(--purple);
+    }
+
+    /* ---------- About section ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin-top: 46px;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+    }
+
+    .about-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-text strong {
+      color: var(--text);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 26px 14px;
+      text-align: center;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .stat:hover {
+      transform: translateY(-5px);
+      border-color: rgba(168, 85, 247, 0.7);
+      box-shadow: 0 10px 28px rgba(168, 85, 247, 0.25);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      word-break: break-word;
+      background: var(--gradient-full);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* ---------- Cards (Gaming) ---------- */
     .cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 26px;
+      margin-top: 46px;
     }
 
     .card {
-      background: #fff;
-      padding: 30px 24px;
-      border-radius: 16px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 36px 26px;
+      border-radius: 20px;
       text-align: center;
-      transition: transform 0.2s;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
 
     .card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-8px);
+      border-color: rgba(0, 183, 255, 0.7);
+      box-shadow: 0 16px 40px rgba(0, 183, 255, 0.22);
     }
 
     .card .icon {
-      font-size: 2.2rem;
-      margin-bottom: 12px;
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      border-radius: 18px;
+      background: var(--gradient);
+      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.4);
+      transition: transform 0.3s;
+    }
+
+    .card:hover .icon {
+      transform: rotate(-8deg) scale(1.08);
     }
 
     .card h3 {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
     }
 
     .card p {
       color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    /* ---------- Video placeholder slots ---------- */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .video-slot {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background:
+        linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(0, 183, 255, 0.08)),
+        var(--card);
+      border: 2px dashed rgba(168, 85, 247, 0.45);
+      border-radius: 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+      padding: 12px;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .video-slot:hover {
+      transform: translateY(-5px);
+      border-color: var(--blue);
+      box-shadow: 0 12px 30px rgba(0, 183, 255, 0.2);
+    }
+
+    .video-slot .play {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--gradient-red);
+      color: #fff;
+      font-size: 1.2rem;
+      padding-left: 3px;
+    }
+
+    /* When you add a real video, put an <iframe> inside the slot: it fills the box */
+    .video-slot iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* ---------- YouTube section ---------- */
+    .channel-card {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin: 46px auto 0;
+      max-width: 720px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 26px 28px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .channel-card:hover {
+      border-color: rgba(255, 46, 99, 0.6);
+      box-shadow: 0 14px 40px rgba(255, 46, 99, 0.2);
+    }
+
+    .channel-avatar {
+      flex-shrink: 0;
+      width: 84px;
+      height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--gradient-red);
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      box-shadow: 0 0 24px rgba(255, 46, 99, 0.45);
+    }
+
+    .channel-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .channel-info h3 {
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .channel-info p {
+      color: var(--muted);
       font-size: 0.95rem;
+      word-break: break-word;
+    }
+
+    /* ---------- Instagram section ---------- */
+    .insta-card {
+      max-width: 620px;
+      margin: 46px auto 0;
+      text-align: center;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 40px 26px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .insta-card:hover {
+      border-color: rgba(168, 85, 247, 0.7);
+      box-shadow: 0 14px 40px rgba(168, 85, 247, 0.22);
+    }
+
+    .insta-card .icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.1rem;
+      border-radius: 20px;
+      background: var(--gradient-red);
+      box-shadow: 0 8px 22px rgba(255, 46, 99, 0.4);
+    }
+
+    .insta-card h3 {
+      margin-bottom: 8px;
+      font-size: 1.4rem;
+    }
+
+    .insta-card p {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .insta-note {
+      margin: 16px 0 0;
+      font-size: 0.88rem;
+      color: #d9b8ff;
+    }
+
+    /* ---------- Contact section ---------- */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 40px;
+      margin-top: 46px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .info-item[hidden] {
+      display: none;
+    }
+
+    .info-item:hover {
+      transform: translateX(6px);
+      border-color: rgba(168, 85, 247, 0.7);
+    }
+
+    .info-item .icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      border-radius: 14px;
+      background: var(--gradient);
+    }
+
+    .info-item h4 {
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .info-item p {
+      color: var(--muted);
+      font-size: 0.93rem;
+      word-break: break-word;
+    }
+
+    .contact-form {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 30px 26px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 13px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #6d6890;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.28);
+    }
+
+    .contact-form .btn {
+      width: 100%;
+    }
+
+    .form-message {
+      display: none;
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      color: #86efac;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    .form-message.show {
+      display: block;
+      animation: fadeUp 0.4s ease both;
     }
 
     /* ---------- Footer ---------- */
     footer {
-      text-align: center;
-      padding: 24px 0;
+      position: relative;
+      background: #05040b;
+      border-top: 1px solid var(--card-border);
       color: var(--muted);
-      font-size: 0.9rem;
-      border-top: 1px solid #e5e7eb;
+      font-size: 0.93rem;
+    }
+
+    footer::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -1px;
+      height: 1px;
+      background: var(--gradient-full);
+      opacity: 0.6;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1.2fr;
+      gap: 40px;
+      padding: 60px 0 40px;
+    }
+
+    .footer-brand .logo {
+      display: inline-flex;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand p {
+      max-width: 340px;
+    }
+
+    footer h4 {
+      color: var(--text);
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s, padding-left 0.25s;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+      padding-left: 6px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 20px 0;
+      border-top: 1px solid var(--card-border);
+    }
+
+    /* ---------- Toast message (shown when a link is not added yet) ---------- */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translate(-50%, 30px);
+      max-width: calc(100% - 40px);
+      padding: 12px 22px;
+      background: #1a1433;
+      border: 1px solid var(--purple);
+      border-radius: 999px;
+      color: #fff;
+      font-size: 0.95rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 200;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    /* ---------- Tablet ---------- */
+    @media (max-width: 960px) {
+      .cards,
+      .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* ---------- Mobile styles ---------- */
-    @media (max-width: 768px) {
+    @media (max-width: 860px) {
       .menu-btn {
         display: block;
       }
 
       .nav-links {
         position: absolute;
-        top: 64px;
+        top: 68px;
         left: 0;
         right: 0;
         flex-direction: column;
         gap: 0;
-        background: #fff;
-        border-bottom: 1px solid #e5e7eb;
+        background: rgba(7, 6, 15, 0.98);
+        border-bottom: 1px solid var(--card-border);
         display: none; /* hidden until the menu button is tapped */
       }
 
       .nav-links.open {
         display: flex;
+        animation: fadeUp 0.3s ease both;
       }
 
       .nav-links li {
-        padding: 14px 20px;
-        border-top: 1px solid #f1f1f1;
+        padding: 16px 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
       }
 
+      .nav-links a::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
       .hero {
+        padding: 90px 0 80px;
+      }
+
+      .hero p {
+        font-size: 1.02rem;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .about,
+      .gaming,
+      .youtube,
+      .instagram,
+      .contact {
         padding: 60px 0;
       }
 
-      .hero h1 {
-        font-size: 2rem;
+      .section-title {
+        font-size: 1.75rem;
+        letter-spacing: 1px;
       }
 
-      .cards {
+      .cards,
+      .video-grid {
         grid-template-columns: 1fr;
+      }
+
+      .channel-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 26px 20px;
+      }
+
+      .channel-card .btn {
+        width: 100%;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 45px 0 30px;
+      }
+    }
+
+    /* Respect users who prefer less motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      html {
+        scroll-behavior: auto;
       }
     }
   </style>
@@ -229,80 +1008,374 @@
 
 <body>
 
-  <!-- Header -->
+  <!-- ===================== HEADER ===================== -->
   <header>
     <div class="container nav">
-      <a href="#home" class="logo">MySite</a>
+      <a href="#home" class="logo" aria-label="ANKIT FF Home">
+        <!-- Crosshair gaming logo -->
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#00b7ff" />
+              <stop offset="0.55" stop-color="#a855f7" />
+              <stop offset="1" stop-color="#ff2e63" />
+            </linearGradient>
+          </defs>
+          <circle cx="20" cy="20" r="14" stroke="url(#logoGrad)" stroke-width="3" />
+          <circle cx="20" cy="20" r="3.5" fill="url(#logoGrad)" />
+          <path d="M20 2v8M20 30v8M2 20h8M30 20h8" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" />
+        </svg>
+        <span class="logo-text">ANKIT FF</span>
+      </a>
 
-      <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">&#9776;</button>
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
 
       <ul class="nav-links" id="navLinks">
         <li><a href="#home">Home</a></li>
-        <li><a href="#features">Features</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#gaming">Gaming</a></li>
+        <li><a href="#youtube">YouTube</a></li>
+        <li><a href="#instagram">Instagram</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
   </header>
 
-  <!-- Hero -->
+  <!-- ===================== HOME / HERO ===================== -->
   <section class="hero" id="home">
+    <div class="grid-bg"></div>
     <div class="container">
-      <h1>Welcome to <span>MySite</span></h1>
-      <p>A simple, clean and fast website that works great on both mobile and computer.</p>
-      <a href="#features" class="btn">Get Started</a>
+      <span class="tag">Free Fire Gaming</span>
+      <h1>ANKIT FF</h1>
+      <p>Welcome to the official home of ANKIT FF. Watch Free Fire gameplay, highlights and more on YouTube.</p>
+
+      <div class="hero-buttons">
+        <a href="https://www.youtube.com/@deadshot_ankit" class="btn btn-red" target="_blank" rel="noopener noreferrer">▶ Subscribe Now</a>
+        <a href="#gaming" class="btn btn-outline">Explore Gaming</a>
+      </div>
     </div>
   </section>
 
-  <!-- Features -->
-  <section class="features" id="features">
+  <!-- ===================== ABOUT ===================== -->
+  <section class="about" id="about">
     <div class="container">
-      <h2 class="section-title">Why Choose Us</h2>
+      <h2 class="section-title">About ANKIT FF</h2>
 
-      <div class="cards">
-        <div class="card">
-          <div class="icon">📱</div>
-          <h3>Mobile Friendly</h3>
-          <p>Looks perfect on every screen, from small phones to large desktops.</p>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            Hi, I am <strong>ANKIT FF</strong>, a Free Fire gaming creator. This website is
+            the home for my gaming content, where you can find my YouTube channel,
+            my social media links and a way to contact me.
+          </p>
+          <p>
+            My videos are all about Free Fire. Subscribe to my YouTube channel so you
+            never miss a new upload.
+          </p>
         </div>
 
-        <div class="card">
-          <div class="icon">⚡</div>
-          <h3>Fast &amp; Light</h3>
-          <p>Simple code with no extra libraries, so the page loads quickly.</p>
-        </div>
-
-        <div class="card">
-          <div class="icon">🎨</div>
-          <h3>Modern Design</h3>
-          <p>Clean layout and soft colors that are easy on the eyes.</p>
+        <div class="stats">
+          <div class="stat">
+            <strong>Free Fire</strong>
+            <span>Game</span>
+          </div>
+          <div class="stat">
+            <strong>YouTube</strong>
+            <span>Platform</span>
+          </div>
+          <div class="stat">
+            <strong>Gaming</strong>
+            <span>Creator</span>
+          </div>
+          <div class="stat">
+            <strong>@deadshot_ankit</strong>
+            <span>Channel Handle</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ===================== GAMING ===================== -->
+  <section class="gaming" id="gaming">
+    <div class="container">
+      <h2 class="section-title">Free Fire Gaming</h2>
+      <p class="section-sub">Everything about the game, in one place.</p>
+
+      <!-- Free Fire gaming cards -->
+      <div class="cards">
+        <div class="card">
+          <div class="icon">🎮</div>
+          <h3>Gameplay</h3>
+          <p>Free Fire gameplay videos from the ANKIT FF channel.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">🏆</div>
+          <h3>Highlights</h3>
+          <p>The best moments from matches, collected in one place.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">🎯</div>
+          <h3>Tips &amp; Tricks</h3>
+          <p>Helpful ideas to improve your Free Fire game.</p>
+        </div>
+      </div>
+
+      <!-- Highlights section -->
+      <h3 class="sub-title">Highlights</h3>
+      <div class="video-grid">
+        <div class="video-slot"><div class="play">▶</div><span>Highlight video will be added here</span></div>
+        <div class="video-slot"><div class="play">▶</div><span>Highlight video will be added here</span></div>
+        <div class="video-slot"><div class="play">▶</div><span>Highlight video will be added here</span></div>
+      </div>
+
+      <!-- Gameplay videos section -->
+      <h3 class="sub-title">Gameplay Videos</h3>
+      <div class="video-grid">
+        <div class="video-slot"><div class="play">▶</div><span>Gameplay video will be added here</span></div>
+        <div class="video-slot"><div class="play">▶</div><span>Gameplay video will be added here</span></div>
+        <div class="video-slot"><div class="play">▶</div><span>Gameplay video will be added here</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== YOUTUBE ===================== -->
+  <section class="youtube" id="youtube">
+    <div class="container">
+      <h2 class="section-title">My YouTube Channel</h2>
+      <p class="section-sub">Watch my Free Fire videos and subscribe to the channel.</p>
+
+      <div class="channel-card">
+        <div class="channel-avatar">FF</div>
+        <div class="channel-info">
+          <h3>ANKIT FF</h3>
+          <p>youtube.com/@deadshot_ankit</p>
+        </div>
+        <a href="https://www.youtube.com/@deadshot_ankit" class="btn btn-red" target="_blank" rel="noopener noreferrer">▶ Subscribe</a>
+      </div>
+
+      <!-- Gaming videos section -->
+      <h3 class="sub-title">Gaming Videos</h3>
+      <div class="video-grid">
+        <div class="video-slot"><div class="play">▶</div><span>Gaming video will be added here</span></div>
+        <div class="video-slot"><div class="play">▶</div><span>Gaming video will be added here</span></div>
+        <div class="video-slot"><div class="play">▶</div><span>Gaming video will be added here</span></div>
+      </div>
+
+      <!-- Latest videos section -->
+      <h3 class="sub-title">Latest Videos</h3>
+      <div class="video-grid">
+        <div class="video-slot"><div class="play">▶</div><span>Latest video will be added here</span></div>
+        <div class="video-slot"><div class="play">▶</div><span>Latest video will be added here</span></div>
+        <div class="video-slot"><div class="play">▶</div><span>Latest video will be added here</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INSTAGRAM ===================== -->
+  <section class="instagram" id="instagram">
+    <div class="container">
+      <h2 class="section-title">Instagram</h2>
+
+      <div class="insta-card">
+        <div class="icon">📸</div>
+        <h3>Follow ANKIT FF on Instagram</h3>
+        <p>Stay connected for updates and behind-the-scenes posts.</p>
+        <a href="#" class="btn" data-social="instagram">Follow on Instagram</a>
+        <p class="insta-note" id="instaNote">Instagram profile link will be added soon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <a class="info-item" href="https://www.youtube.com/@deadshot_ankit" target="_blank" rel="noopener noreferrer">
+            <div class="icon">▶</div>
+            <div>
+              <h4>YouTube</h4>
+              <p>youtube.com/@deadshot_ankit</p>
+            </div>
+          </a>
+
+          <a class="info-item" href="#" data-social="instagram">
+            <div class="icon">📸</div>
+            <div>
+              <h4>Instagram</h4>
+              <p id="instaText">Link coming soon</p>
+            </div>
+          </a>
+
+          <!-- Shown only when CONTACT_EMAIL is filled in the script below -->
+          <a class="info-item" id="emailCard" href="#" hidden>
+            <div class="icon">📧</div>
+            <div>
+              <h4>Email</h4>
+              <p id="emailText"></p>
+            </div>
+          </a>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Write your message here" required></textarea>
+          </div>
+
+          <button type="submit" class="btn">Send Message</button>
+          <div class="form-message" id="formMessage">Thank you! Your message has been received.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
   <footer>
     <div class="container">
-      <p>&copy; <span id="year"></span> MySite. All rights reserved.</p>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="logo" aria-label="ANKIT FF Home">
+            <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="20" cy="20" r="14" stroke="url(#logoGrad)" stroke-width="3" />
+              <circle cx="20" cy="20" r="3.5" fill="url(#logoGrad)" />
+              <path d="M20 2v8M20 30v8M2 20h8M30 20h8" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" />
+            </svg>
+            <span class="logo-text">ANKIT FF</span>
+          </a>
+          <p>Free Fire gaming creator. Watch on YouTube and follow on Instagram.</p>
+        </div>
+
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#gaming">Gaming</a></li>
+            <li><a href="#youtube">YouTube</a></li>
+            <li><a href="#instagram">Instagram</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Follow Us</h4>
+          <ul class="footer-links">
+            <li><a href="https://www.youtube.com/@deadshot_ankit" target="_blank" rel="noopener noreferrer">▶ YouTube</a></li>
+            <li><a href="#" data-social="instagram">📸 Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> ANKIT FF. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
+  <!-- Small message that pops up when a link has not been added yet -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script>
-    // Open / close the menu on mobile
+    // =====================================================
+    // YOUR LINKS - edit these two lines
+    // (the YouTube link is already set directly in the buttons above)
+    // =====================================================
+    const INSTAGRAM_URL = "";   // <-- paste your Instagram profile link between the quotes
+    const CONTACT_EMAIL = "";   // <-- optional: paste your email to show it in the Contact section
+
+    // ---------- Mobile menu ----------
     const menuBtn = document.getElementById("menuBtn");
     const navLinks = document.getElementById("navLinks");
 
     menuBtn.addEventListener("click", function () {
-      navLinks.classList.toggle("open");
+      const isOpen = navLinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
     });
 
     // Close the menu after a link is tapped
     navLinks.querySelectorAll("a").forEach(function (link) {
       link.addEventListener("click", function () {
         navLinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
       });
     });
 
-    // Show the current year in the footer
+    // ---------- Small pop-up message ----------
+    const toast = document.getElementById("toast");
+    let toastTimer;
+
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toast.classList.remove("show");
+      }, 2800);
+    }
+
+    // ---------- Instagram links ----------
+    const instaLinks = document.querySelectorAll('[data-social="instagram"]');
+    const instaNote = document.getElementById("instaNote");
+    const instaText = document.getElementById("instaText");
+
+    if (INSTAGRAM_URL.trim() !== "") {
+      // A link was added: make every Instagram button open it
+      instaLinks.forEach(function (link) {
+        link.href = INSTAGRAM_URL;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      });
+      instaNote.style.display = "none";
+      instaText.textContent = INSTAGRAM_URL.replace(/^https?:\/\/(www\.)?/, "");
+    } else {
+      // No link yet: show a friendly message instead of a broken page
+      instaLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          showToast("Instagram link will be added soon.");
+        });
+      });
+    }
+
+    // ---------- Optional email in the Contact section ----------
+    if (CONTACT_EMAIL.trim() !== "") {
+      const emailCard = document.getElementById("emailCard");
+      emailCard.href = "mailto:" + CONTACT_EMAIL;
+      document.getElementById("emailText").textContent = CONTACT_EMAIL;
+      emailCard.hidden = false;
+    }
+
+    // ---------- Contact form: show a thank-you message (no data is sent anywhere yet) ----------
+    const contactForm = document.getElementById("contactForm");
+    const formMessage = document.getElementById("formMessage");
+
+    contactForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      formMessage.classList.add("show");
+      contactForm.reset();
+
+      setTimeout(function () {
+        formMessage.classList.remove("show");
+      }, 4000);
+    });
+
+    // ---------- Footer year ----------
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 
